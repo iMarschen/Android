@@ -1,0 +1,138 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="17dp"
+        android:layout_marginTop="18dp"
+        android:textSize="36dp"
+        android:text="新建联系人" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/textView1"
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="46dp"
+        android:text="姓名" 
+        android:textSize="15dp"/>
+    
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView2"
+        android:layout_alignBottom="@+id/textView2"
+        android:layout_toRightOf="@+id/textView2"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_marginTop="26dp"
+        android:layout_toLeftOf="@+id/phone"
+        android:text="电话"
+        android:textSize="15dp" />
+
+    <EditText
+        android:id="@+id/phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView3"
+        android:layout_alignLeft="@+id/name"
+        android:digits="0123456789"
+        android:ems="10" />
+
+	<TextView
+	    android:id="@+id/textView4"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBottom="@+id/imageView1"
+	    android:layout_marginBottom="14dp"
+	    android:layout_toLeftOf="@+id/phone"
+	    android:text="头像"
+	    android:textSize="15dp" />
+
+	<Button
+	    android:id="@+id/add"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_below="@+id/select"
+	    android:layout_marginTop="22dp"
+	    android:layout_toRightOf="@+id/textView4"
+	    android:text="添加" />
+
+
+
+	<Button
+	    android:id="@+id/del"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignBaseline="@+id/add"
+	    android:layout_alignBottom="@+id/add"
+	    android:layout_toRightOf="@+id/textView1"
+	    android:text="取消" />
+
+	<RadioGroup
+	    android:id="@+id/select"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:layout_alignParentLeft="true"
+	    android:layout_below="@+id/imageView2"
+	    android:orientation="horizontal" >
+
+	    <RadioButton
+	        android:id="@+id/p1"
+	        android:layout_marginLeft="88dp"
+	        android:text="1" />
+
+	    <RadioButton
+	        android:id="@+id/p2"
+	        android:layout_marginLeft="10dp"
+	        android:text="2" />
+
+	    <RadioButton
+	        android:id="@+id/p3"
+	        android:layout_marginLeft="11dp"
+	        android:text="3" />
+	</RadioGroup>
+
+	<ImageView
+	    android:id="@+id/imageView3"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_above="@+id/select"
+	    android:layout_toRightOf="@+id/textView1"
+	    android:src="@drawable/p3" />
+
+	<ImageView
+	    android:id="@+id/imageView1"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignRight="@+id/add"
+	    android:layout_below="@+id/phone"
+	    android:layout_marginTop="20dp"
+	    android:src="@drawable/p1" />
+
+	<ImageView
+	    android:id="@+id/imageView2"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content"
+	    android:layout_alignTop="@+id/imageView1"
+	    android:layout_toRightOf="@+id/imageView1"
+	    android:layout_marginLeft="15dp"
+	    android:src="@drawable/p2" />
+
+</RelativeLayout>
