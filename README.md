@@ -1,3 +1,5 @@
-# Android_login
-emmm .....<br>
-<b>这是一个关于安卓开发的bulabula...</b>
+Adroid-Demo
+====
+<b>这是一个关于安卓开发的项目</br>
+1.简单登陆（传值传参，页面跳转）
+2.手机通讯录（SQLite的使用）
