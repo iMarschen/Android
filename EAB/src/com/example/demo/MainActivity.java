@@ -8,6 +8,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,7 +20,6 @@ import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -25,33 +28,48 @@ public class MainActivity extends Activity {
 	ImageView p1;
 	List<String> name = new ArrayList<String>();
 	List<String> phone = new ArrayList<String>();
-	List<String> tx = new ArrayList<String>();
+//	List<String> date = new ArrayList<String>();
+	List<String> head = new ArrayList<String>();
 	List<HashMap<String, Object>> datt;
+	List<HashMap<String, Object>> dat;
 	SimpleAdapter adp;
 	int k=0;
+	MyDatabase mydb;
+	Cursor cur;
+	Drawable drawable;
+	ImageView imgview;
+	
+	private final static String CNAME="cname";
+	private final static String CTEL="ctel";
+	private final static String CDATE="cdate";
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mydb=new MyDatabase(this);
+        cur=mydb.query();
         
         list1=(ListView)findViewById(R.id.listView1);
         p1=(ImageView)findViewById(R.id.tz);
         
         //准备数据
         datt=new ArrayList<HashMap<String,Object>>();
-        
-        for(int i=0;i<name.size();i++){
-        	HashMap<String,Object> map =new HashMap<String, Object>();
-    		map.put("name", name.get(i));
-    		map.put("phone",phone.get(i));
-    		map.put("tx", Integer.parseInt(tx.get(i)));
-    		datt.add(map);
-        }
-        
+        if(cur.moveToFirst()){
+			do{
+				HashMap<String, Object> map=new HashMap<String, Object>();
+				map.put("CNAME", cur.getString(cur.getColumnIndex(CNAME)));
+				map.put("CTEL", cur.getString(cur.getColumnIndex(CTEL)));
+				map.put("CDATE", cur.getString(cur.getColumnIndex(CDATE)));
+		        Bitmap bp=mydb.getbmp(1);
+		        drawable=change_to_drawable(bp);
+				map.put("HEAD", R.drawable.p1);
+				datt.add(map);
+			}while(cur.moveToNext());
+		}
         //构造adapt
-        String [] from={"name","tx"};
-           int [] to={R.id.name,R.id.tx};
+        String [] from={"HEAD","CNAME"};
+           int [] to={R.id.tx1,R.id.name1};
         adp = new SimpleAdapter(this, datt, R.layout.item, from, to);
         list1.setAdapter(adp);
         
@@ -66,7 +84,7 @@ public class MainActivity extends Activity {
 				//list1.setAdapter(adp);
 			}
 		});
-        //单击详情
+       //单击详情
         list1.setOnItemClickListener(new OnItemClickListener() {
 
 			@Override
@@ -74,9 +92,12 @@ public class MainActivity extends Activity {
 					long arg3) {
 				// TODO Auto-generated method stub
 				Intent ite = new Intent(MainActivity.this, Details.class);
-				ite.putExtra("name", datt.get(arg2).get("name").toString());
-				ite.putExtra("phone", datt.get(arg2).get("phone").toString());
-				ite.putExtra("tx", datt.get(arg2).get("tx").toString());
+				//单击第几条记录
+				cur.moveToPosition(arg2);
+				ite.putExtra("cname", cur.getString(cur.getColumnIndex(CNAME)));
+				ite.putExtra("ctel", cur.getString(cur.getColumnIndex(CTEL)));
+				ite.putExtra("cdate", cur.getString(cur.getColumnIndex(CDATE)));
+//				ite.putExtra("head", R.drawable.p1);
 				startActivity(ite);
 			}
 		});
@@ -97,6 +118,10 @@ public class MainActivity extends Activity {
 				public void onClick(DialogInterface arg0, int arg1) {
 					// TODO Auto-generated method stub
 					datt.remove(k);
+					//从数据库删除
+					cur.moveToPosition(k);
+					String del_n=cur.getString(cur.getColumnIndex(CNAME));
+					mydb.delete(del_n);
 					list1.setAdapter(adp);
 				}
 				});
@@ -113,16 +138,40 @@ public class MainActivity extends Activity {
     	if(requestCode==222 && resultCode==111){
     		String nn=data.getStringExtra("name");
     		String pp=data.getStringExtra("phone");
+    		String da=data.getStringExtra("date");
     		String tt=data.getStringExtra("tx");
-    		name.add(nn);
-    	    phone.add(pp);
-    	    tx.add(tt);
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("name", nn);
-            map.put("phone", pp);
-            map.put("tx", Integer.parseInt(tt));
-            datt.add(map);
-    	    list1.setAdapter(adp);
+    		int itt=Integer.parseInt(tt);
+    		
+    		drawable=this.getResources().getDrawable(itt);
+    	    byte[] img=mydb.imgtobyte(drawable);
+    	    
+    	    mydb.insert(nn, pp, da, img);
+    	    
+            //从数据库里取数据
+            dat=new ArrayList<HashMap<String,Object>>();
+            if(cur.moveToFirst()){
+    			do{
+    				HashMap<String, Object> map=new HashMap<String, Object>();
+    				map.put("CNAME", cur.getString(cur.getColumnIndex(CNAME)));
+    				map.put("CTEL", cur.getString(cur.getColumnIndex(CTEL)));
+    				map.put("CDATE", cur.getString(cur.getColumnIndex(CDATE)));
+    		        Bitmap bp=mydb.getbmp(1);
+    		        drawable=change_to_drawable(bp);
+    				map.put("HEAD", R.drawable.p1);
+    				datt.add(map);
+    			}while(cur.moveToNext());
+    		}
+            //构造adapt
+            String [] from={"HEAD","CNAME"};
+               int [] to={R.id.tx1,R.id.name1};
+            adp = new SimpleAdapter(this, dat, R.layout.item, from, to);
+            list1.setAdapter(adp);
     	}
+    }
+    
+    public Drawable change_to_drawable(Bitmap bp){
+    	Bitmap bm=bp;
+    	BitmapDrawable bd=new BitmapDrawable(this.getResources(),bm);
+    	return bd;
     }
 }

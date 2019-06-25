@@ -29,26 +29,30 @@ public final class R {
         public static final int p3=0x7f020004;
     }
     public static final class id {
-        public static final int action_settings=0x7f080015;
-        public static final int add=0x7f08000c;
-        public static final int cp=0x7f080007;
-        public static final int del=0x7f08000e;
+        public static final int action_settings=0x7f080019;
+        public static final int add=0x7f08000e;
+        public static final int cp=0x7f08000a;
+        public static final int date=0x7f080016;
+        public static final int del=0x7f08000d;
         public static final int dh=0x7f080005;
-        public static final int imageView1=0x7f08000b;
+        public static final int imageView1=0x7f080010;
         public static final int imageView2=0x7f08000f;
-        public static final int imageView3=0x7f080013;
+        public static final int imageView3=0x7f080012;
         public static final int listView1=0x7f080001;
-        public static final int name=0x7f080009;
-        public static final int p1=0x7f080010;
-        public static final int p2=0x7f080011;
-        public static final int p3=0x7f080012;
-        public static final int phone=0x7f08000a;
-        public static final int select=0x7f08000d;
+        public static final int name=0x7f08000b;
+        public static final int name1=0x7f080018;
+        public static final int p1=0x7f080013;
+        public static final int p2=0x7f080014;
+        public static final int p3=0x7f080015;
+        public static final int phone=0x7f08000c;
+        public static final int select=0x7f080011;
+        public static final int sr=0x7f080009;
         public static final int textView1=0x7f080000;
         public static final int textView2=0x7f080004;
         public static final int textView3=0x7f080003;
-        public static final int textView4=0x7f080008;
-        public static final int tx=0x7f080014;
+        public static final int textView4=0x7f080007;
+        public static final int textView5=0x7f080008;
+        public static final int tx1=0x7f080017;
         public static final int tz=0x7f080002;
         public static final int xm=0x7f080006;
     }
